@@ -1,34 +1,39 @@
+import React from 'react';
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { motion } from 'framer-motion';
 import image from "/src/assets/image.png"; // Ensure the path is correct
 
 export default function HeroSection() {
   return (
-    <Container maxWidth={false} disableGutters>
+    <Container className='pt-10 px-8' maxWidth="xl" disableGutters>
       <Box
         sx={{
-          minHeight: "500px", // Minimum height
+          minHeight: "500px",
           display: "flex",
-          alignItems: "center", // Vertically centers content
-          overflow: "hidden", // Ensure content does not exceed the container
-          backgroundImage: `url(${image})`, // Set the background image
-          backgroundSize: "cover", // Cover the entire box
-          backgroundPosition: "center", // Center the image
-          backgroundRepeat: "no-repeat", // Prevent image from repeating
-          width: "100%", // Ensure it takes full width
-          position: "relative", // Allow positioning of the overlay
+          alignItems: "center",
+          overflow: "hidden",
+          backgroundImage: `url(${image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          borderRadius:"10px",
+          width: "100%",
+          position: "relative",
         }}
       >
         {/* Dark Overlay */}
         <Box
           sx={{
-            position: "absolute", // Position the overlay absolutely
+            position: "absolute",
             top: 0,
             left: 0,
             width: "100%",
             height: "100%",
-            bgcolor: "rgba(0, 0, 0, 0.5)", // Dark overlay with transparency
+            bgcolor: "rgba(0, 0, 0, 0.5)",
           }}
         />
 
@@ -37,37 +42,120 @@ export default function HeroSection() {
           <Grid item xs={12} md={6}>
             <Box
               sx={{
-                p: 4, // Adds padding
-                height: "100%", // Ensures the text section fills the container height
+                p: 4,
+                height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "center", // Centers the text vertically
-                position: "relative", // Position relative for text layering
-                zIndex: 1, // Ensure text is above the overlay
+                justifyContent: "center",
+                position: "relative",
+                zIndex: 1,
               }}
             >
-              <h1 className="text-5xl py-4 text-primary bg-backgroundColor w-fit px-2 font-bold">Discover the Best Movies</h1>
-              <p className="text-2xl text-backgroundColor font-medium">
-                Explore thousands of movies, find your favorites, and get personalized recommendations. Start your movie journey now!
-              </p>
-              <a
-                className="text-backgroundColor bg-textColor"
-                href="/explore"
-                style={{
-                  textDecoration: "none",
-                  padding: "10px 20px",
-                  borderRadius: "4px",
-                  textAlign: "center",
-                  marginTop: "20px",
-                  display: "inline-block",
-                  width: "fit-content",
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <Typography 
+                  variant="h1" 
+                  sx={{ 
+                    fontSize: { xs: '2.5rem', md: '3.5rem' },
+                    fontWeight: 'bold',
+                    color: 'var(--background-color)',
+                    bgcolor: 'var(--primary-color)',
+                    p: 1,
+                    mb: 2,
+                    display: 'inline-block'
+                  }}
+                >
+                  Discover the Best Movies
+                </Typography>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <Typography 
+                  variant="h5" 
+                  sx={{ 
+                    color: 'var(--background-color)',
+                    mb: 3
+                  }}
+                >
+                  Explore thousands of movies, find your favorites, and get personalized recommendations. Start your movie journey now!
+                </Typography>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <Button 
+                  variant="contained" 
+                  href="/explore"
+                  sx={{
+                    bgcolor: 'var(--text-color)',
+                    color: 'var(--background-color)',
+                    '&:hover': {
+                      bgcolor: 'var(--secondary-color)',
+                    },
+                    mb: 2
+                  }}
+                >
+                  Explore Now
+                </Button>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.6 }}
+              >
+                <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                  Discover something new every day.
+                </Typography>
+              </motion.div>
+            </Box>
+          </Grid>
+          {/* Left Section for Animated Element */}
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  delay: 0.8
                 }}
               >
-                Explore Now
-              </a>
-              <small style={{ marginTop: "10px", color: "#888" }}>
-                Discover something new every day.
-              </small>
+                <Box
+                  sx={{
+                    width: 200,
+                    height: 200,
+                    borderRadius: "50%",
+                    background: "linear-gradient(45deg, var(--primary-color), var(--secondary-color))",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 0 20px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  <Typography variant="h3" sx={{ color: 'var(--background-color)' }}>
+                    Movie
+                  </Typography>
+                </Box>
+              </motion.div>
             </Box>
           </Grid>
         </Grid>
