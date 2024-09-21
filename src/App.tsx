@@ -1,17 +1,16 @@
 import Features from "./components/Features";
 import Footer from "./components/Footer";
-import HeroSection from "./components/heroSection";
-import NavBar from "./components/navBar";
-
-
+import HeroSection from "./components/HeroSection";
+import NavBar from "./components/NavBar";
 
 export default function App() {
+  return (
+    <div>
+      <NavBar />
 
-  return (<div>
-    <NavBar/>
-    <HeroSection/>
-    <Features/>
-    <Footer/>
-    
-  </div>)
+      <HeroSection />
+      <Features />
+      <Footer />
+    </div>
+  );
 }

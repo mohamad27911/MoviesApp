@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import image from "/src/assets/image.png"; // Ensure the path is correct
 
 export default function HeroSection() {
   return (
-    <Container className='pt-10 px-8' maxWidth="xl" disableGutters>
+    <Container className="pt-10 px-8" maxWidth="xl" disableGutters>
       <Box
         sx={{
           minHeight: "500px",
@@ -20,12 +20,13 @@ export default function HeroSection() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          borderRadius:"10px",
+          borderRadius: "10px",
           width: "100%",
           position: "relative",
         }}
       >
         {/* Dark Overlay */}
+
         <Box
           sx={{
             position: "absolute",
@@ -56,16 +57,16 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <Typography 
-                  variant="h1" 
-                  sx={{ 
-                    fontSize: { xs: '2.5rem', md: '3.5rem' },
-                    fontWeight: 'bold',
-                    color: 'var(--background-color)',
-                    bgcolor: 'var(--primary-color)',
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: { xs: "2.5rem", md: "3.5rem" },
+                    fontWeight: "bold",
+                    color: "var(--background-color)",
+                    bgcolor: "var(--primary-color)",
                     p: 1,
                     mb: 2,
-                    display: 'inline-block'
+                    display: "inline-block",
                   }}
                 >
                   Discover the Best Movies
@@ -76,14 +77,15 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <Typography 
-                  variant="h5" 
-                  sx={{ 
-                    color: 'var(--background-color)',
-                    mb: 3
+                <Typography
+                  variant="h5"
+                  sx={{
+                    color: "var(--background-color)",
+                    mb: 3,
                   }}
                 >
-                  Explore thousands of movies, find your favorites, and get personalized recommendations. Start your movie journey now!
+                  Explore thousands of movies, find your favorites, and get
+                  personalized recommendations. Start your movie journey now!
                 </Typography>
               </motion.div>
               <motion.div
@@ -91,16 +93,16 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <Button 
-                  variant="contained" 
+                <Button
+                  variant="contained"
                   href="/explore"
                   sx={{
-                    bgcolor: 'var(--text-color)',
-                    color: 'var(--background-color)',
-                    '&:hover': {
-                      bgcolor: 'var(--secondary-color)',
+                    bgcolor: "var(--text-color)",
+                    color: "var(--background-color)",
+                    "&:hover": {
+                      bgcolor: "var(--secondary-color)",
                     },
-                    mb: 2
+                    mb: 2,
                   }}
                 >
                   Explore Now
@@ -111,7 +113,10 @@ export default function HeroSection() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.6 }}
               >
-                <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                <Typography
+                  variant="caption"
+                  sx={{ color: "rgba(255, 255, 255, 0.7)" }}
+                >
                   Discover something new every day.
                 </Typography>
               </motion.div>
@@ -136,7 +141,7 @@ export default function HeroSection() {
                   type: "spring",
                   stiffness: 260,
                   damping: 20,
-                  delay: 0.8
+                  delay: 0.8,
                 }}
               >
                 <Box
@@ -144,14 +149,18 @@ export default function HeroSection() {
                     width: 200,
                     height: 200,
                     borderRadius: "50%",
-                    background: "linear-gradient(45deg, var(--primary-color), var(--secondary-color))",
+                    background:
+                      "linear-gradient(45deg, var(--primary-color), var(--secondary-color))",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     boxShadow: "0 0 20px rgba(0,0,0,0.3)",
                   }}
                 >
-                  <Typography variant="h3" sx={{ color: 'var(--background-color)' }}>
+                  <Typography
+                    variant="h3"
+                    sx={{ color: "var(--background-color)" }}
+                  >
                     Movie
                   </Typography>
                 </Box>
