@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import { TextField, IconButton } from "@mui/material";
-import { Search } from "lucide-react";
-import { form } from "framer-motion/client";
-import { SxProps } from "@mui/material";
 interface SearchBarProps {
   onSearch: (query: string) => void;
 }
 // This is the search function to handle search, takes string.
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
 
   const handleSearch = (event: React.FormEvent) => {
     event.preventDefault();

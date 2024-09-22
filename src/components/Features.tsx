@@ -183,7 +183,6 @@ function FeatureTab({
   isActive,
   onClick,
   index,
-  isMobile,
 }: FeatureTabProps) {
   return (
     <motion.div

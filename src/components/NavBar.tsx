@@ -7,38 +7,34 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SearchBar from "./SearchBar";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// This is a value comming from props just to check if the current page is homepage or details page
+interface NavBarProps {
+  search: boolean;
+}
 
-function NavBar() {
+
+const pages = ["Products", "Pricing", "Blog"];
+
+const NavBar: React.FC<NavBarProps> = ({ search }) =>  {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+
   const handleSearch = (query: string) => {
     console.log("Search query:", query);
   };
@@ -130,38 +126,23 @@ function NavBar() {
               </Button>
             ))}
           </Box>
-          <SearchBar onSearch={handleSearch} />
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {/* If the current page is Explore page => show the search bar */}
+          {search && <SearchBar onSearch={handleSearch} />}
+            {/* If the current page is Home page => show the Explore Now Button */}
+         {!search&& <Button
+                  variant="contained"
+                  href="/explore"
+                  sx={{
+                    bgcolor: "var(--text-color)",
+                    color: "var(--background-color)",
+                    "&:hover": {
+                      bgcolor: "var(--secondary-color)",
+                    },
+                   
+                  }}
+                >
+                  Explore Now
+                </Button>}
         </Toolbar>
       </Container>
     </AppBar>
