@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { motion } from "framer-motion";
 import image from "/src/assets/image.png";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -93,9 +94,10 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
+                <Link  to={"/explore"}>
                 <Button
                   variant="contained"
-                  href="/explore"
+                  
                   sx={{
                     bgcolor: "var(--text-color)",
                     color: "var(--background-color)",
@@ -107,6 +109,7 @@ export default function HeroSection() {
                 >
                   Explore Now
                 </Button>
+                </Link>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0 }}

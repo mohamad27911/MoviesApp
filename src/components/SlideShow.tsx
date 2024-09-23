@@ -43,18 +43,7 @@ const Slideshow: React.FC = () => {
       />
 
       <div className="absolute inset-0 flex justify-between items-center">
-        <button
-          className="text-white bg-orange-500 p-2 rounded-full font-bold transition duration-200 hover:bg-white hover:text-orange-500"
-          onClick={() => {
-            setFade("opacity-0");
-            setTimeout(() => {
-              setCurrentIndex((prevIndex) => (prevIndex + 1) % movies.length);
-              setFade("opacity-100");
-            }, 300); // Match this with the fade-out duration
-          }}
-        >
-          &#10095;
-        </button>
+     
       </div>
       <div className="absolute bottom-4 w-full flex justify-center space-x-2">
         {movies.map((_, idx) => (

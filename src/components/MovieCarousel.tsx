@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Movie {
   name: string;
@@ -24,19 +22,9 @@ const topMovies: Movie[] = [
 ];
 
 export default function MovieCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const currentIndex =0;
 
-  const nextMovie = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % topMovies.length);
-  };
 
-  const prevMovie = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + topMovies.length) % topMovies.length
-    );
-  };
-
-  // Same logic as SlideShow
 
   return (
     <div className="max-w-sm mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-9">
@@ -47,20 +35,7 @@ export default function MovieCarousel() {
           alt={topMovies[currentIndex].name}
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-between px-4">
-          <button
-            onClick={prevMovie}
-            className="p-2 rounded-full bg-white bg-opacity-50 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-white"
-            aria-label="Previous movie"
-          >
-            <ChevronLeft className="h-6 w-6 text-white" />
-          </button>
-          <button
-            onClick={nextMovie}
-            className="p-2 rounded-full bg-white bg-opacity-50 hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-white"
-            aria-label="Next movie"
-          >
-            <ChevronRight className="h-6 w-6 text-white" />
-          </button>
+         
         </div>
       </div>
       <div className="p-4 ">

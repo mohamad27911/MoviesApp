@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Container, Typography, Box, Button } from "@mui/material";
 import { Film, Search, Star, Clock } from "lucide-react";
 
-const features = [
+export const Features = [
   {
     icon: <Film />,
     title: "Extensive Movie Database",
@@ -76,7 +76,7 @@ export default function AnimatedFeaturesSection() {
               sx={{ width: { xs: "100%", md: "33%" } }}
               className="gap-4 grid p-4"
             >
-              {features.map((feature, index) => (
+              {Features.map((feature, index) => (
                 <FeatureTab
                   key={index}
                   feature={feature}
@@ -134,7 +134,7 @@ export default function AnimatedFeaturesSection() {
                     }}
                     style={{ marginBottom: "1rem" }}
                   >
-                    {React.cloneElement(features[activeFeature].icon, {
+                    {React.cloneElement(Features[activeFeature].icon, {
                       style: {
                         width: 48,
                         height: 48,
@@ -148,14 +148,14 @@ export default function AnimatedFeaturesSection() {
                     align="center"
                     sx={{ color: "var(--background-color)", mb: 2 }}
                   >
-                    {features[activeFeature].title}
+                    {Features[activeFeature].title}
                   </Typography>
                   <Typography
                     variant="body1"
                     align="center"
                     sx={{ color: "var(--background-color)" }}
                   >
-                    {features[activeFeature].description}
+                    {Features[activeFeature].description}
                   </Typography>
                 </motion.div>
               </AnimatePresence>

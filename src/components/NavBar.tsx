@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,19 +13,15 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SearchBar from "./SearchBar";
 
-// This is a value comming from props just to check if the current page is homepage or details page
+// This is a value coming from props just to check if the current page is homepage or details page
 interface NavBarProps {
   search: boolean;
 }
 
-
 const pages = ["Products", "Pricing", "Blog"];
 
-const NavBar: React.FC<NavBarProps> = ({ search }) =>  {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-
+const NavBar: React.FC<NavBarProps> = ({ search }) => {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -33,7 +30,6 @@ const NavBar: React.FC<NavBarProps> = ({ search }) =>  {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
 
   const handleSearch = (query: string) => {
     console.log("Search query:", query);
@@ -44,6 +40,7 @@ const NavBar: React.FC<NavBarProps> = ({ search }) =>  {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <Link to={"/"}>
           <Typography
             variant="h6"
             noWrap
@@ -61,6 +58,7 @@ const NavBar: React.FC<NavBarProps> = ({ search }) =>  {
           >
             LOGO
           </Typography>
+         </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -128,24 +126,27 @@ const NavBar: React.FC<NavBarProps> = ({ search }) =>  {
           </Box>
           {/* If the current page is Explore page => show the search bar */}
           {search && <SearchBar onSearch={handleSearch} />}
-            {/* If the current page is Home page => show the Explore Now Button */}
-         {!search&& <Button
-                  variant="contained"
-                  href="/explore"
-                  sx={{
-                    bgcolor: "var(--text-color)",
-                    color: "var(--background-color)",
-                    "&:hover": {
-                      bgcolor: "var(--secondary-color)",
-                    },
-                   
-                  }}
-                >
-                  Explore Now
-                </Button>}
+          {/* If the current page is Home page => show the Explore Now Button */}
+          {!search && (
+            <Link to="/explore" style={{ textDecoration: 'none' }}>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "var(--text-color)",
+                  color: "var(--background-color)",
+                  "&:hover": {
+                    bgcolor: "var(--secondary-color)",
+                  },
+                }}
+              >
+                Explore Now
+              </Button>
+            </Link>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
+
 export default NavBar;

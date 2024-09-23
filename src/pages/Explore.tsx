@@ -2,33 +2,89 @@ import NavBar from "../components/NavBar";
 import SlideShow from "../components/SlideShow";
 import MovieCarousel from "../components/MovieCarousel";
 import Footer from "../components/Footer";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { NextArrow } from "../components/NextArrow";
+import { PrevArrow } from "../components/PrevArrow ";
 
-function Explore() {
+export default function Explore() {
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 400,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <div>
+    <div className="min-h-screen text-textColor">
       <NavBar search={true} />
       <SlideShow />
-      <h1 className=" text-5xl font-bold text-center text-[#F62A00] mb-2 mt-9 transition duration-200 delay-150 hover:text-white ">
-        Top Rated Movies
-      </h1>
-      <div className="flex justify-center mr-12 ml-10">
-        <MovieCarousel />
-        <MovieCarousel />
-        <MovieCarousel />
-        <MovieCarousel />
+
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-5xl font-bold text-center text-textColor mb-8 mt-9">
+          Top Rated Movies
+        </h1>
+        <Slider {...sliderSettings}>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+        </Slider>
+
+        <h1 className="text-5xl font-bold text-center text-textColor mb-8 mt-16">
+          Action
+        </h1>
+        <Slider {...sliderSettings}>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+          <div>
+            <MovieCarousel />
+          </div>
+        </Slider>
       </div>
-      <h1 className=" text-5xl font-bold text-center text-[#F62A00] mb-2 mt-9 transition duration-200 delay-150 hover:text-white">
-        Action
-      </h1>
-      <div className="mb-12 flex justify-center mr-12 ml-10">
-        <MovieCarousel />
-        <MovieCarousel />
-        <MovieCarousel />
-        <MovieCarousel />
-      </div>
+
       <Footer />
     </div>
   );
 }
-
-export default Explore;
