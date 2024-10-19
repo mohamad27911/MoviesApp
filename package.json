@@ -18,6 +18,7 @@
     "@mui/material": "^6.1.1",
     "@mui/styled-engine-sc": "^6.1.1",
     "aceternity-ui": "^0.2.2",
+    "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.5.6",
