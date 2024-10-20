@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 interface PropsType {
   title: string;
@@ -15,7 +13,7 @@ export default function MovieCarousel({
   id,
 }: PropsType) {
   return (
-    <div className="mx-auto rounded-xl overflow-hidden mt-9 mx-2">
+    <div className="mx-auto rounded-xl overflow-hidden mt-9 ">
       <MovieCard
         id={id}
         title={title} // Pass the title

@@ -15,11 +15,11 @@ export default function MovieCard({
 }: MovieCardProps) {
   return (
     <Link to={`/movies/${id}`} className="w-full">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 w-full max-w-xs h-80 m-3">
-        <div className="h-48 overflow-hidden">
+      <div className="  rounded shadow-md overflow-hidden transition-transform duration-300 hover:scale-110  max-w-xs h-80 m-3">
+        <div className="h-48 overflow-hidden ">
           <img src={image} alt={title} className="w-full h-full object-cover" />
         </div>
-        <div className="p-4 h-32 flex flex-col justify-between">
+        <div className="p-4 h-32 flex flex-col justify-between bg-white">
           <h2 className="text-xl font-semibold text-gray-800 mb-2 truncate">
             {title}
           </h2>

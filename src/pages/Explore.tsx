@@ -117,7 +117,7 @@ export default function Explore() {
           Top Rated Movies
         </h1>
         <Slider {...sliderSettings}>
-          {post.slice(0, MovieLimit).map((movie) => (
+          {post.slice(10, 16).map((movie) => (
             <div>
               {/* Top Rated Movies Carousel */}
               <MovieCarousel
