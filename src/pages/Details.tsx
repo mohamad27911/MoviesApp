@@ -1,9 +1,27 @@
-import { Box, Container, Typography } from '@mui/material';
-import NavBar from '../components/NavBar';
+import { Box, Container, Typography } from "@mui/material";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import image from "/src/assets/image.png";
-import { CardDemo } from '../components/CardDemo';
+import { CardDemo } from "../components/CardDemo";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function Details() {
+  const KEY = "3776781c8aea2e47d76bd18d3b21e3d2"; // API key
+  const url = "https://api.themoviedb.org/3/movie";
+
+  const [movie, setMovie] = useState([]);
+  const { id } = useParams();
+  useEffect(() => {
+    axios
+      .get(`${url}/${id}?api_key=${KEY}`)
+      .then((response) => setMovie(response.data))
+      .catch((error) => console.error(error));
+  });
+
+  if (!movie) return <div>Loading...</div>;
+
   return (
     <div>
       <NavBar search={false} />
@@ -43,7 +61,7 @@ function Details() {
       </Container>
 
       {/* Description Section */}
-      <Container className="pt-10 px-8 mt-14" maxWidth="xl">
+      <Container className="pt-10 px-8 mt-14 mb-9" maxWidth="xl">
         <Box
           sx={{
             bgcolor: "rgba(255, 255, 255, 0.8)", // Light background for contrast
@@ -56,10 +74,11 @@ function Details() {
             Movie Description
           </Typography>
           <Typography variant="body1" className="text-gray-700">
-            This is where you can add a detailed description of the movie. Include key details such as the plot, main characters, and any other information that would engage the reader. Make sure the text is well-structured and easy to read.
+            {movie.overview}
           </Typography>
         </Box>
       </Container>
+      <Footer />
     </div>
   );
 }

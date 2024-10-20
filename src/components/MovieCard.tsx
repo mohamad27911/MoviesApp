@@ -14,7 +14,8 @@ export default function MovieCard({
   id,
 }: MovieCardProps) {
   return (
-    <Link to={`/movies/${id}`} className="w-full">
+    <Link to={`/details/${id}`} className="w-full">
+      {/* To take you to details page */}{" "}
       <div className="  rounded shadow-md overflow-hidden transition-transform duration-300 hover:scale-110  max-w-xs h-80 m-3">
         <div className="h-48 overflow-hidden ">
           <img src={image} alt={title} className="w-full h-full object-cover" />

@@ -13,7 +13,7 @@ export default function App() {
       element: <Explore />,
     },
     {
-      path: "/details",
+      path: "/details/:id",
       element: <Details />,
     },
   ]);

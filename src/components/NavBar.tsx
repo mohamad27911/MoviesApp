@@ -21,7 +21,9 @@ interface NavBarProps {
 const pages = ["Products", "Pricing", "Blog"];
 
 const NavBar: React.FC<NavBarProps> = ({ search }) => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -41,24 +43,24 @@ const NavBar: React.FC<NavBarProps> = ({ search }) => {
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Link to={"/"}>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-         </Link>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              CINEMIX
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -111,7 +113,7 @@ const NavBar: React.FC<NavBarProps> = ({ search }) => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            CINEMIX
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -128,7 +130,7 @@ const NavBar: React.FC<NavBarProps> = ({ search }) => {
           {search && <SearchBar onSearch={handleSearch} />}
           {/* If the current page is Home page => show the Explore Now Button */}
           {!search && (
-            <Link to="/explore" style={{ textDecoration: 'none' }}>
+            <Link to="/explore" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
                 sx={{
