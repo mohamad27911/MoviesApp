@@ -7,11 +7,22 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+interface Movie {
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+  tagline:string;
+  runtime:number;
+  overview:number
+}
+
+
 function Details() {
   const KEY = "3776781c8aea2e47d76bd18d3b21e3d2"; // API key
   const url = "https://api.themoviedb.org/3/movie";
 
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
 

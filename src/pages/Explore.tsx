@@ -6,15 +6,24 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { NextArrow } from "../components/NextArrow";
-import { PrevArrow } from "../components/PrevArrow ";
+import { PrevArrow } from "../components/PrevArrow"; // Removed extra space
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+  popularity: number;
+}
+
 export default function Explore() {
-  const [post, setPost] = useState([]);
-  const [upComingMovies, setUpComingMovies] = useState([]);
-  const [ComedyMovies, setUpComedyMovies] = useState([]);
-  const [HorrorMovies, setHorrorMovies] = useState([]);
+  const [post, setPost] = useState<Movie[]>([]); // Specified the type of movies array
+  const [upComingMovies, setUpComingMovies] = useState<Movie[]>([]);
+  const [ComedyMovies, setUpComedyMovies] = useState<Movie[]>([]);
+  const [HorrorMovies, setHorrorMovies] = useState<Movie[]>([]);
 
   // Loading states
   const [isLoadingPost, setIsLoadingPost] = useState(true);
@@ -123,19 +132,21 @@ export default function Explore() {
         </h1>
         <div className="mb-16">
           {isLoadingPost ? (
-            <div className="text-center">Loading...</div> // Replace with spinner if needed
+            <div className="text-center">Loading...</div> // Consider adding a loading spinner
           ) : (
             <Slider {...sliderSettings}>
-              {post.slice(10, 16).map((movie) => (
-                <div key={movie.id} className="px-2 flex justify-center">
-                  <MovieCarousel
-                    title={movie.title}
-                    popularity={movie.popularity}
-                    image={`${imageBaseUrl}${movie.poster_path}`}
-                    id={movie.id}
-                  />
-                </div>
-              ))}
+              {post.length > MovieLimit
+                ? post.slice(0, MovieLimit).map((movie) => ( // Check array length before slicing
+                  <div key={movie.id} className="px-2 flex justify-center">
+                    <MovieCarousel
+                      title={movie.title}
+                      popularity={movie.popularity}
+                      image={`${imageBaseUrl}${movie.poster_path}`}
+                      id={movie.id}
+                    />
+                  </div>
+                ))
+                : <div className="text-center">No movies found</div>}
             </Slider>
           )}
         </div>
@@ -148,16 +159,18 @@ export default function Explore() {
             <div className="text-center">Loading...</div>
           ) : (
             <Slider {...sliderSettings}>
-              {upComingMovies.slice(0, MovieLimit).map((movie) => (
-                <div key={movie.id} className="px-2 flex justify-center">
-                  <MovieCarousel
-                    title={movie.title}
-                    popularity={movie.popularity}
-                    image={`${imageBaseUrl}${movie.poster_path}`}
-                    id={movie.id}
-                  />
-                </div>
-              ))}
+              {upComingMovies.length > MovieLimit
+                ? upComingMovies.slice(0, MovieLimit).map((movie) => (
+                  <div key={movie.id} className="px-2 flex justify-center">
+                    <MovieCarousel
+                      title={movie.title}
+                      popularity={movie.popularity}
+                      image={`${imageBaseUrl}${movie.poster_path}`}
+                      id={movie.id}
+                    />
+                  </div>
+                ))
+                : <div className="text-center">No movies found</div>}
             </Slider>
           )}
         </div>
@@ -170,16 +183,18 @@ export default function Explore() {
             <div className="text-center">Loading...</div>
           ) : (
             <Slider {...sliderSettings}>
-              {ComedyMovies.slice(0, MovieLimit).map((movie) => (
-                <div key={movie.id} className="px-2 flex justify-center">
-                  <MovieCarousel
-                    title={movie.title}
-                    popularity={movie.popularity}
-                    image={`${imageBaseUrl}${movie.poster_path}`}
-                    id={movie.id}
-                  />
-                </div>
-              ))}
+              {ComedyMovies.length > MovieLimit
+                ? ComedyMovies.slice(0, MovieLimit).map((movie) => (
+                  <div key={movie.id} className="px-2 flex justify-center">
+                    <MovieCarousel
+                      title={movie.title}
+                      popularity={movie.popularity}
+                      image={`${imageBaseUrl}${movie.poster_path}`}
+                      id={movie.id}
+                    />
+                  </div>
+                ))
+                : <div className="text-center">No movies found</div>}
             </Slider>
           )}
         </div>
@@ -192,16 +207,18 @@ export default function Explore() {
             <div className="text-center">Loading...</div>
           ) : (
             <Slider {...sliderSettings}>
-              {HorrorMovies.slice(0, MovieLimit).map((movie) => (
-                <div key={movie.id} className="px-2 flex justify-center">
-                  <MovieCarousel
-                    title={movie.title}
-                    popularity={movie.popularity}
-                    image={`${imageBaseUrl}${movie.poster_path}`}
-                    id={movie.id}
-                  />
-                </div>
-              ))}
+              {HorrorMovies.length > MovieLimit
+                ? HorrorMovies.slice(0, MovieLimit).map((movie) => (
+                  <div key={movie.id} className="px-2 flex justify-center">
+                    <MovieCarousel
+                      title={movie.title}
+                      popularity={movie.popularity}
+                      image={`${imageBaseUrl}${movie.poster_path}`}
+                      id={movie.id}
+                    />
+                  </div>
+                ))
+                : <div className="text-center">No movies found</div>}
             </Slider>
           )}
         </div>
