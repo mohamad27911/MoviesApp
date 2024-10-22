@@ -1,4 +1,3 @@
-
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -94,21 +93,20 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                <Link  to={"/explore"}>
-                <Button
-                  variant="contained"
-                  
-                  sx={{
-                    bgcolor: "var(--text-color)",
-                    color: "var(--background-color)",
-                    "&:hover": {
-                      bgcolor: "var(--secondary-color)",
-                    },
-                    mb: 2,
-                  }}
-                >
-                  Explore Now
-                </Button>
+                <Link to={"/explore"}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "var(--text-color)",
+                      color: "var(--background-color)",
+                      "&:hover": {
+                        bgcolor: "var(--secondary-color)",
+                      },
+                      mb: 2,
+                    }}
+                  >
+                    Explore Now
+                  </Button>
                 </Link>
               </motion.div>
               <motion.div

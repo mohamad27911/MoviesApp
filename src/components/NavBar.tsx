@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SearchBar from "./SearchBar";
+import customIcon from "/src/assets/movie.png";
 
 // This is a value coming from props just to check if the current page is homepage or details page
 interface NavBarProps {

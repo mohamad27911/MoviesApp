@@ -46,11 +46,11 @@ const Slideshow: React.FC = () => {
         {/* Add buttons or controls for next/previous if needed */}
       </div>
 
-      <div className="absolute bottom-4 w-full flex justify-center space-x-2">
+      <div className="absolute bottom-4 w-full flex justify-center space-x-2 pr-14">
         {movies.map((_, idx) => (
           <div
             key={idx}
-            className={`h-2 w-2 rounded-full ${
+            className={`h-2 w-2 rounded-full  ${
               idx === currentIndex ? "bg-white" : "bg-gray-500"
             }`}
           ></div>
