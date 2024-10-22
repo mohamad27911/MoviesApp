@@ -21,9 +21,7 @@ export default function MovieCarousel({
         image={image}
       />
       <div className="p-4">
-        <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-          Select Movie
-        </div>
+        
       </div>
     </div>
   );

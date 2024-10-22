@@ -1,60 +1,79 @@
-"use client";
-import { cn } from "../../@/lib/utils";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+"use client"
+
+import { cn } from "../../@/lib/utils"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
 export function CardDemo() {
-  const url = "https://api.themoviedb.org/3/movie";
-  const KEY = "3776781c8aea2e47d76bd18d3b21e3d2";
-  const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
-  const { id } = useParams();
-  const [movie, setMovie] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`${url}/${id}?api_key=${KEY}`)
-      .then((response) => setMovie(response.data))
-      .catch((error) => console.error(error));
-  });
+  const url = "https://api.themoviedb.org/3/movie"
+  const KEY = "3776781c8aea2e47d76bd18d3b21e3d2"
+  const imageBaseUrl = "https://image.tmdb.org/t/p/w500"
+  const { id } = useParams()
+  const [movie, setMovie] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  if (!movie) return <div>Loading...</div>;
+  useEffect(() => {
+    const fetchMovie = async () => {
+      try {
+        const response = await axios.get(`${url}/${id}?api_key=${KEY}`)
+        setMovie(response.data)
+      } catch (error) {
+        console.error("Error fetching movie data:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchMovie()
+  }, [id])
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
+      </div>
+    )
+  }
+
+  if (!movie) {
+    return <div className="text-center text-2xl mt-10">Movie not found</div>
+  }
 
   return (
-    <div className="max-w-xs w-full">
+    <div className="w-full sm:max-w-xs mx-auto flex justify-center sm:block">
       <div
         className={cn(
-          "group w-full cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl mx-auto flex flex-col justify-end p-4 border border-transparent dark:border-neutral-800",
-          "bg-[url(https://images.unsplash.com/photo-1476842634003-7dcca8f832de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80)] bg-cover",
-
-          "before:bg-[url(https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWlodTF3MjJ3NnJiY3Rlc2J0ZmE0c28yeWoxc3gxY2VtZzA5ejF1NSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/syEfLvksYQnmM/giphy.gif)] before:fixed before:inset-0 before:opacity-0 before:z-[-1]"
+          "group w-full cursor-pointer overflow-hidden relative card h-auto min-h-[24rem] sm:h-[28rem] rounded-2xl shadow-2xl flex flex-col justify-end border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:scale-105",
         )}
       >
-        <div className="relative z-50 p-6 rounded-lg bg-secondary bg-opacity-70">
-          <img
-            src={`${imageBaseUrl}${movie.poster_path}`}
-            alt="movie.title"
-            className=" w-full h-48 object-cover rounded-lg"
-          />
-          <h1 className="font-bold text-xl md:text-3xl text-gray-50 mb-2">
+        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70 z-10"></div>
+        <img
+          src={`${imageBaseUrl}${movie.poster_path}`}
+          alt={movie.title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-20 p-4 sm:p-6 space-y-3 sm:space-y-4">
+          <h1 className="font-bold text-xl sm:text-2xl md:text-3xl text-white mb-2 line-clamp-2">
             {movie.title}
           </h1>
-
-          <div className="grid grid-cols-1 gap-4">
-            <div className="font-normal text-base text-gray-200">
-              <span className="font-semibold text-gray-50">Category:</span>{" "}
-              Action
+          <div className="bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm rounded-xl p-3 sm:p-4 space-y-2 sm:space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="font-normal text-sm text-gray-200">
+                <span className="font-semibold text-white">Category:</span> Action
+              </div>
+              <div className="flex items-center">
+                <span className="text-yellow-400 mr-1">★</span>
+                <span className="font-semibold text-white">{movie.vote_average}</span>
+              </div>
             </div>
-            <div className="font-normal text-base text-gray-200">
-              <span className="font-semibold text-gray-50">Rating:</span>{" "}
-              {movie.vote_average}
-            </div>
-            <div className="font-normal text-base text-gray-200 col-span-2">
-              <span className="font-semibold text-gray-50">Release:</span>{" "}
-              {movie.release_date}
+            <div className="font-normal text-sm text-gray-200">
+              <span className="font-semibold text-white">Release:</span>{" "}
+              {new Date(movie.release_date).toLocaleDateString()}
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

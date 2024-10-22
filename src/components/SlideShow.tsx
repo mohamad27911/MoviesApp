@@ -35,16 +35,17 @@ const Slideshow: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto mt-8">
+    <div className="relative w-full max-w-4xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
       <img
         src={movies[currentIndex].imageUrl}
         alt={movies[currentIndex].title}
-        className={`w-full h-80 object-cover rounded-lg shadow-lg transition-opacity duration-300 ${fade}`}
+        className={`w-full h-auto max-h-80 object-cover rounded-lg shadow-lg transition-opacity duration-300 ${fade}`}
       />
 
       <div className="absolute inset-0 flex justify-between items-center">
-     
+        {/* Add buttons or controls for next/previous if needed */}
       </div>
+
       <div className="absolute bottom-4 w-full flex justify-center space-x-2">
         {movies.map((_, idx) => (
           <div

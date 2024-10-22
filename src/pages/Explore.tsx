@@ -15,66 +15,68 @@ export default function Explore() {
   const [upComingMovies, setUpComingMovies] = useState([]);
   const [ComedyMovies, setUpComedyMovies] = useState([]);
   const [HorrorMovies, setHorrorMovies] = useState([]);
+
+  // Loading states
+  const [isLoadingPost, setIsLoadingPost] = useState(true);
+  const [isLoadingUpcoming, setIsLoadingUpcoming] = useState(true);
+  const [isLoadingComedy, setIsLoadingComedy] = useState(true);
+  const [isLoadingHorror, setIsLoadingHorror] = useState(true);
+
   const KEY = "3776781c8aea2e47d76bd18d3b21e3d2"; // API key
   const url = "https://api.themoviedb.org/3/movie";
   const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
   const MovieLimit = 6;
 
-  // Fetching top rated movies
-
+  // Fetching top-rated movies
   useEffect(() => {
     axios
       .get(`${url}/popular?api_key=${KEY}`)
       .then((response) => {
-        console.log(response.data.results); // Check if results are being logged correctly
-        setPost(response.data.results); // Ensure results are stored in 'post'
+        setPost(response.data.results);
+        setIsLoadingPost(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  // Fetching Upcoming Movies
-
+  // Fetching upcoming movies
   useEffect(() => {
     axios
       .get(`https://api.themoviedb.org/3/movie/upcoming?api_key=${KEY}`)
       .then((response) => {
-        console.log(response.data.results); // Check if results are being logged correctly
-        setUpComingMovies(response.data.results); // Ensure results are stored in 'post'
+        setUpComingMovies(response.data.results);
+        setIsLoadingUpcoming(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  // Fetching Comedy Movies
-
+  // Fetching comedy movies
   useEffect(() => {
     axios
       .get(
         `https://api.themoviedb.org/3/discover/movie?api_key=${KEY}&with_genres=35`
       )
       .then((response) => {
-        console.log(response.data.results); // Check if results are being logged correctly
-        setUpComedyMovies(response.data.results); // Ensure results are stored in 'post'
+        setUpComedyMovies(response.data.results);
+        setIsLoadingComedy(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  // Fetching Horror Movies
-
+  // Fetching horror movies
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${KEY}&with_genres=27
-`
+        `https://api.themoviedb.org/3/discover/movie?api_key=${KEY}&with_genres=27`
       )
       .then((response) => {
-        console.log(response.data.results); // Check if results are being logged correctly
-        setHorrorMovies(response.data.results); // Ensure results are stored in 'post'
+        setHorrorMovies(response.data.results);
+        setIsLoadingHorror(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -93,7 +95,7 @@ export default function Explore() {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },
@@ -102,86 +104,107 @@ export default function Explore() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          arrows: false,
+          centerMode: true,
+          centerPadding: "0px",
         },
       },
     ],
   };
 
   return (
-    <div className="min-h-screen text-textColor ">
-      <NavBar search={true} />
+    <div className="min-h-screen text-textColor">
+      <NavBar search={false} />
       <SlideShow />
 
-      <div className="container mx-auto px-4 py-8 ">
-        <h1 className="text-5xl font-bold text-center text-textColor mb-8 mt-9">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-textColor mb-8 mt-9">
           Top Rated Movies
         </h1>
-        <Slider {...sliderSettings}>
-          {post.slice(10, 16).map((movie) => (
-            <div>
-              {/* Top Rated Movies Carousel */}
-              <MovieCarousel
-                title={movie.title} // Pass the title
-                popularity={movie.popularity} // Pass the popularity
-                image={`${imageBaseUrl}${movie.poster_path}`} // Handle missing images
-                id={movie.id} // Pass the ID
-              />
-            </div>
-          ))}
-        </Slider>
+        <div className="mb-16">
+          {isLoadingPost ? (
+            <div className="text-center">Loading...</div> // Replace with spinner if needed
+          ) : (
+            <Slider {...sliderSettings}>
+              {post.slice(10, 16).map((movie) => (
+                <div key={movie.id} className="px-2 flex justify-center">
+                  <MovieCarousel
+                    title={movie.title}
+                    popularity={movie.popularity}
+                    image={`${imageBaseUrl}${movie.poster_path}`}
+                    id={movie.id}
+                  />
+                </div>
+              ))}
+            </Slider>
+          )}
+        </div>
 
-        <h1 className="text-5xl font-bold text-center text-textColor mb-8 mt-16">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-textColor mb-8 mt-16">
           Upcoming Movies
         </h1>
-        <Slider {...sliderSettings}>
-          {upComingMovies.slice(0, MovieLimit).map((movie) => (
-            <div>
-              {/* Action Movies Carousel */}
-              <MovieCarousel
-                title={movie.title} // Pass the title
-                popularity={movie.popularity} // Pass the popularity
-                image={`${imageBaseUrl}${movie.poster_path}`} // Handle missing images
-                id={movie.id} // Pass the ID
-              />
-            </div>
-          ))}
-        </Slider>
-        {/* Comedy Movies */}
-        <h1 className="text-5xl font-bold text-center text-textColor mb-8 mt-16">
+        <div className="mb-16">
+          {isLoadingUpcoming ? (
+            <div className="text-center">Loading...</div>
+          ) : (
+            <Slider {...sliderSettings}>
+              {upComingMovies.slice(0, MovieLimit).map((movie) => (
+                <div key={movie.id} className="px-2 flex justify-center">
+                  <MovieCarousel
+                    title={movie.title}
+                    popularity={movie.popularity}
+                    image={`${imageBaseUrl}${movie.poster_path}`}
+                    id={movie.id}
+                  />
+                </div>
+              ))}
+            </Slider>
+          )}
+        </div>
+
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-textColor mb-8 mt-16">
           Comedy Movies
         </h1>
-        <Slider {...sliderSettings}>
-          {ComedyMovies.slice(0, MovieLimit).map((movie) => (
-            <div key={movie.id}>
-              <MovieCarousel
-                title={movie.title} // Pass the title
-                popularity={movie.popularity} // Pass the popularity
-                image={`${imageBaseUrl}${movie.poster_path}`} // Handle missing images
-                id={movie.id} // Pass the ID
-              />
-            </div>
-          ))}
-        </Slider>
-        {/* Horror Movies */}
-        <h1 className="text-5xl font-bold text-center text-textColor mb-8 mt-16">
+        <div className="mb-16">
+          {isLoadingComedy ? (
+            <div className="text-center">Loading...</div>
+          ) : (
+            <Slider {...sliderSettings}>
+              {ComedyMovies.slice(0, MovieLimit).map((movie) => (
+                <div key={movie.id} className="px-2 flex justify-center">
+                  <MovieCarousel
+                    title={movie.title}
+                    popularity={movie.popularity}
+                    image={`${imageBaseUrl}${movie.poster_path}`}
+                    id={movie.id}
+                  />
+                </div>
+              ))}
+            </Slider>
+          )}
+        </div>
+
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-textColor mb-8 mt-16">
           Horror Movies
         </h1>
-        <Slider {...sliderSettings}>
-          {HorrorMovies.slice(0, MovieLimit).map(
-            (
-              movie //slice is to limit movies to 5 slides
-            ) => (
-              <div key={movie.id}>
-                <MovieCarousel
-                  title={movie.title} // Pass the title
-                  popularity={movie.popularity} // Pass the popularity
-                  image={`${imageBaseUrl}${movie.poster_path}`} // Handle missing images
-                  id={movie.id} // Pass the ID
-                />
-              </div>
-            )
+        <div className="mb-16">
+          {isLoadingHorror ? (
+            <div className="text-center">Loading...</div>
+          ) : (
+            <Slider {...sliderSettings}>
+              {HorrorMovies.slice(0, MovieLimit).map((movie) => (
+                <div key={movie.id} className="px-2 flex justify-center">
+                  <MovieCarousel
+                    title={movie.title}
+                    popularity={movie.popularity}
+                    image={`${imageBaseUrl}${movie.poster_path}`}
+                    id={movie.id}
+                  />
+                </div>
+              ))}
+            </Slider>
           )}
-        </Slider>
+        </div>
       </div>
 
       <Footer />
