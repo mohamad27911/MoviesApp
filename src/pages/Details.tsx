@@ -1,36 +1,77 @@
-import { Box, Container, Typography } from "@mui/material";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
-import image from "/src/assets/image.png";
-import { CardDemo } from "../components/CardDemo";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { 
+  Box, 
+  Container, 
+  Typography, 
+  Chip, 
+  Grid, 
+  Button, 
+  CircularProgress,
+  Paper,
+} from '@mui/material';
+import { motion } from 'framer-motion';
+import axios from 'axios';
+import { PlayCircle, Clock, Calendar, Star, TrendingUp } from 'lucide-react';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import MovieCarousel from '../components/MovieCarousel';
 
 interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: number;
+  overview: string;
+  genres: { id: number; name: string }[];
+  tagline: string;
+  popularity: number;
+}
+
+interface Recommendation {
+  id: number;
   title: string;
   poster_path: string;
   vote_average: number;
   release_date: string;
-  tagline:string;
-  runtime:number;
-  overview:number
+  popularity: number;
 }
 
 
-function Details() {
-  const KEY = "3776781c8aea2e47d76bd18d3b21e3d2"; // API key
-  const url = "https://api.themoviedb.org/3/movie";
 
+export default function Details() {
+  const { id } = useParams<Record<string, string | undefined>>();
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
+  const [trailerKey, setTrailerKey] = useState<string | null>(null); // Added state for trailer key
+
+  const KEY = "3776781c8aea2e47d76bd18d3b21e3d2";
+  const url = "https://api.themoviedb.org/3/movie";
+  const imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
         const response = await axios.get(`${url}/${id}?api_key=${KEY}`);
         setMovie(response.data);
+
+        // Fetch movie recommendations
+        const recommendationsResponse = await axios.get(`http://127.0.0.1:5000/recommendations?movie_id=${id}`);
+        const recommendedMovies: Recommendation[] = recommendationsResponse.data;
+        setRecommendations(recommendedMovies);
+
+        // Fetch trailer information
+        const videosResponse = await axios.get(`${url}/${id}/videos?api_key=${KEY}`);
+        const trailers = videosResponse.data.results.filter(
+          (video) => video.type === "Trailer" && video.site === "YouTube"
+        );
+        if (trailers.length > 0) {
+          setTrailerKey(trailers[0].key);
+        }
       } catch (error) {
         console.error("Error fetching movie data:", error);
       } finally {
@@ -41,123 +82,111 @@ function Details() {
     fetchMovie();
   }, [id]);
 
+  // Render logic unchanged except for the "Watch Trailer" button
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
-      </div>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'var(--background-color)' }}>
+        <CircularProgress />
+      </Box>
     );
   }
 
-  if (!movie)
-    return <div className="text-center text-2xl mt-10">Movie not found</div>;
+  if (!movie) {
+    return <Typography variant="h4" align="center" sx={{ mt: 4, backgroundColor: 'var(--background-color)' }}>Movie not found</Typography>;
+  }
 
   return (
-    <div className="min-h-screen ">
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--background-color)' }}>
       <NavBar search={false} />
-      <Container maxWidth="xl" disableGutters>
-        <Box
-          sx={{
-            position: "relative",
-            width: "100%",
-            height: "70vh",
-            minHeight: "500px",
-            display: "flex",
-            alignItems: "flex-end",
-            backgroundImage: `url(${image})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            borderRadius: "0 0 20px 20px",
-            overflow: "hidden",
-          }}
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%)",
-            }}
-          />
-          <Container
-            maxWidth="xl"
-            sx={{ position: "relative", zIndex: 1, pb: 4 }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "flex-end",
-                gap: 4,
-                flexWrap: "wrap",
-                justifyContent: { xs: "center", sm: "flex-start" },
-              }}
-            >
-              <Box sx={{ flexShrink: 0, width: { xs: "100%", sm: "auto" } }}>
-                <CardDemo />
-              </Box>
-              <Box
-                sx={{
-                  flex: 1,
-                  minWidth: "300px",
-                  textAlign: { xs: "center", sm: "left" },
-                }}
-              >
-                <Typography variant="h2" className="text-white font-bold mb-2">
-                  {movie.title}
-                </Typography>
-                <Typography variant="h6" className="italic text-textColor mb-4">
-                  {movie.tagline}
-                </Typography>
-                <Box className="flex gap-4 flex-wrap">
-                  <Typography variant="body1" className="text-gray-300">
-                    <span className="font-semibold text-white">Release:</span>{" "}
-                    {movie.release_date}
-                  </Typography>
-                  <Typography variant="body1" className="text-gray-300">
-                    <span className="font-semibold text-white">Rating:</span>{" "}
-                    {movie.vote_average}/10
-                  </Typography>
-                  <Typography variant="body1" className="text-gray-300">
-                    <span className="font-semibold text-white">Runtime:</span>{" "}
-                    {movie.runtime} min
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Container>
-        </Box>
-      </Container>
-
       <Container maxWidth="xl" sx={{ mt: 4, mb: 8 }}>
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            borderRadius: "20px",
-            p: 4,
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <Typography
-            variant="h4"
-            className="font-bold text-gray-800 dark:text-gray-200 mb-4"
-          >
-            Overview
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={4}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Paper elevation={6} sx={{ borderRadius: 4, overflow: 'hidden' }}>
+                <img
+                  src={`${imageBaseUrl}${movie.poster_path}`}
+                  alt={movie.title}
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </Paper>
+            </motion.div>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Typography variant="h2" component="h1" gutterBottom sx={{ color: '#1a237e', fontWeight: 'bold' }}>
+                {movie.title}
+              </Typography>
+              {movie.tagline && (
+                <Typography variant="h5" sx={{ color: 'text.secondary', mb: 2, fontStyle: 'italic' }}>
+                  "{movie.tagline}"
+                </Typography>
+              )}
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+                {movie.genres.map((genre) => (
+                  <Chip key={genre.id} label={genre.name} sx={{ bgcolor: '#1a237e', color: 'white' }} />
+                ))}
+              </Box>
+              {/* Watch Trailer Button */}
+              {trailerKey && (
+                <Button
+                  variant="contained"
+                  startIcon={<PlayCircle />}
+                  size="large"
+                  sx={{
+                    bgcolor: '#1a237e',
+                    color: 'white',
+                    '&:hover': { bgcolor: '#0d1b60' },
+                    mt: 2,
+                  }}
+                  onClick={() => window.open(`https://www.youtube.com/watch?v=${trailerKey}`, '_blank')}
+                >
+                  Watch Trailer
+                </Button>
+              )}
+            </motion.div>
+          </Grid>
+        </Grid>
+
+        {/* Recommendations Section */}
+        {recommendations.length > 0 ? (
+          <Box sx={{ mt: 6 }}>
+            <Typography variant="h4" align="center" gutterBottom sx={{ color: '#1a237e', fontWeight: 'bold' }}>
+              Recommended Movies
+            </Typography>
+            <Grid container spacing={3} justifyContent="center" alignItems="center">
+              {recommendations.map((rec) => (
+                <Grid item xs={12} sm={6} md={4} lg={2} key={rec.id}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <MovieCarousel
+                      title={rec.title}
+                      popularity={rec.popularity}
+                      image={`${imageBaseUrl}${rec.poster_path}`}
+                      id={rec.id}
+                    />
+                  </motion.div>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        ) : (
+          <Typography variant="h6" align="center" sx={{ mt: 6, color: 'text.secondary' }}>
+            No recommended movies found
           </Typography>
-          <Typography
-            variant="body1"
-            className="text-gray-700 dark:text-gray-300 leading-relaxed"
-          >
-            {movie.overview}
-          </Typography>
-        </Box>
+        )}
       </Container>
       <Footer />
-    </div>
+    </Box>
   );
 }
-
-export default Details;

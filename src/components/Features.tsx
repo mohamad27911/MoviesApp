@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Container, Typography, Box, Button } from "@mui/material";
-import { Film, Search, Star, Clock } from "lucide-react";
+import { Container, Typography, Box, Button, useTheme, useMediaQuery } from "@mui/material";
+import { Film, Search, Star, Clock } from 'lucide-react';
 
-export const Features = [
+const Features = [
   {
     icon: <Film />,
     title: "Extensive Movie Database",
@@ -32,22 +32,14 @@ export const Features = [
 
 export default function AnimatedFeaturesSection() {
   const [activeFeature, setActiveFeature] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 960);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box
       sx={{
-        backgroundColor: "var(--primary-color)",
-        py: 6,
+        backgroundColor: '#ffffff',
+        py: 8,
         overflow: "hidden",
       }}
     >
@@ -58,10 +50,10 @@ export default function AnimatedFeaturesSection() {
           transition={{ duration: 0.5 }}
         >
           <Typography
-            variant="h4"
+            variant="h3"
             component="h2"
             align="center"
-            sx={{ color: "var(--background-color)", mb: 4 }}
+            sx={{ color: '#1a237e', mb: 6, fontWeight: 'bold' }}
           >
             Discover Our Features
           </Typography>
@@ -70,11 +62,16 @@ export default function AnimatedFeaturesSection() {
               display: "flex",
               flexDirection: { xs: "column", md: "row" },
               gap: 4,
+              alignItems: "stretch",
             }}
           >
             <Box
-              sx={{ width: { xs: "100%", md: "33%" } }}
-              className="gap-4 grid p-4"
+              sx={{
+                width: { xs: "100%", md: "40%" },
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              }}
             >
               {Features.map((feature, index) => (
                 <FeatureTab
@@ -83,35 +80,26 @@ export default function AnimatedFeaturesSection() {
                   isActive={activeFeature === index}
                   onClick={() => setActiveFeature(index)}
                   index={index}
-                  isMobile={isMobile}
                 />
               ))}
             </Box>
             <Box
               sx={{
-                width: { xs: "100%", md: "67%" },
-                backgroundColor: "var(--secondary-color)",
-                borderRadius: 2,
-
+                width: { xs: "100%", md: "60%" },
+                backgroundColor: '#1a237e',
+                borderRadius: 4,
                 position: "relative",
                 overflow: "hidden",
                 minHeight: 300,
+                boxShadow: 3,
               }}
             >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeFeature}
-                  initial={{
-                    opacity: 0,
-                    x: isMobile ? 0 : 50,
-                    y: isMobile ? 50 : 0,
-                  }}
+                  initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 50 : 0 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
-                  exit={{
-                    opacity: 0,
-                    x: isMobile ? 0 : -50,
-                    y: isMobile ? -50 : 0,
-                  }}
+                  exit={{ opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? -50 : 0 }}
                   transition={{ duration: 0.3 }}
                   style={{
                     position: "absolute",
@@ -126,34 +114,29 @@ export default function AnimatedFeaturesSection() {
                   <motion.div
                     initial={{ scale: 0.5, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      type: "spring",
-                      stiffness: 260,
-                      damping: 20,
-                    }}
-                    style={{ marginBottom: "1rem" }}
+                    transition={{ duration: 0.5, type: "spring", stiffness: 260, damping: 20 }}
+                    style={{ marginBottom: "1.5rem" }}
                   >
                     {React.cloneElement(Features[activeFeature].icon, {
                       style: {
-                        width: 48,
-                        height: 48,
-                        color: "var(--background-color)",
+                        width: 64,
+                        height: 64,
+                        color: '#ffffff',
                       },
                     })}
                   </motion.div>
                   <Typography
-                    variant="h5"
+                    variant="h4"
                     component="h3"
                     align="center"
-                    sx={{ color: "var(--background-color)", mb: 2 }}
+                    sx={{ color: '#ffffff', mb: 2, fontWeight: 'bold' }}
                   >
                     {Features[activeFeature].title}
                   </Typography>
                   <Typography
                     variant="body1"
                     align="center"
-                    sx={{ color: "var(--background-color)" }}
+                    sx={{ color: '#ffffff', fontSize: '1.1rem' }}
                   >
                     {Features[activeFeature].description}
                   </Typography>
@@ -175,15 +158,9 @@ interface FeatureTabProps {
   isActive: boolean;
   onClick: () => void;
   index: number;
-  isMobile: boolean;
 }
 
-function FeatureTab({
-  feature,
-  isActive,
-  onClick,
-  index,
-}: FeatureTabProps) {
+function FeatureTab({ feature, isActive, onClick, index }: FeatureTabProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -50 }}
@@ -195,18 +172,13 @@ function FeatureTab({
         sx={{
           justifyContent: "flex-start",
           padding: 2,
-          marginBottom: 1,
           width: "100%",
-          borderRadius: 1,
-          backgroundColor: isActive
-            ? "var(--secondary-color)"
-            : "var(--background-color)",
-          color: isActive
-            ? "var(--background-color)"
-            : "var(--secondary-color)",
+          borderRadius: 2,
+          backgroundColor: isActive ? '#1a237e' : '#ffffff',
+          color: isActive ? '#ffffff' : '#1a237e',
+          boxShadow: isActive ? 3 : 1,
           "&:hover": {
-            backgroundColor: "var(--secondary-color)",
-            color: "var(--background-color)",
+            backgroundColor: isActive ? '#0e1642' : '#f0f0f0',
           },
         }}
       >
@@ -217,11 +189,14 @@ function FeatureTab({
           style={{ marginRight: "1rem", display: "flex" }}
         >
           {React.cloneElement(feature.icon, {
-            style: { width: 24, height: 24 },
+            style: { width: 24, height: 24, color: isActive ? '#ffffff' : '#1a237e' },
           })}
         </motion.div>
-        <Typography variant="button">{feature.title}</Typography>
+        <Typography variant="button" sx={{ fontSize: '1rem', fontWeight: 'medium' }}>
+          {feature.title}
+        </Typography>
       </Button>
     </motion.div>
   );
 }
+

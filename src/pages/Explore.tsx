@@ -122,7 +122,7 @@ export default function Explore() {
   };
 
   return (
-    <div className="min-h-screen text-textColor">
+    <div className="min-h-screen text-textColor bg-backgroundColor">
       <NavBar search={false} />
       <SlideShow />
 

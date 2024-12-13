@@ -1,28 +1,30 @@
+import React from "react";
+import { Box } from "@mui/material";
 import MovieCard from "./MovieCard";
-interface PropsType {
+
+interface MovieCarouselProps {
+  id: number;
   title: string;
   popularity: number;
   image: string;
-  id: number;
+  rating?: number;
+  releaseYear?: number;
+  genre?: string;
 }
 
-export default function MovieCarousel({
-  title,
-  popularity,
-  image,
-  id,
-}: PropsType) {
+export default function MovieCarousel({ id, title, popularity, image, rating, releaseYear, genre }: MovieCarouselProps) {
   return (
-    <div className="mx-auto rounded-xl overflow-hidden mt-9 ">
+    <Box sx={{ width: "100%", height: "100%",mb:"10px"}}>
       <MovieCard
         id={id}
-        title={title} // Pass the title
-        popularity={popularity} // Pass the popularity
+        title={title}
+        popularity={popularity}
         image={image}
+        rating={rating}
+        releaseYear={releaseYear}
+        genre={genre}
       />
-      <div className="p-4">
-        
-      </div>
-    </div>
+    </Box>
   );
 }
+
