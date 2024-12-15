@@ -135,18 +135,24 @@ export default function Explore() {
             <div className="text-center">Loading...</div> // Consider adding a loading spinner
           ) : (
             <Slider {...sliderSettings}>
-              {post.length > MovieLimit
-                ? post.slice(0, MovieLimit).map((movie) => ( // Check array length before slicing
-                  <div key={movie.id} className="px-2 flex justify-center">
-                    <MovieCarousel
-                      title={movie.title}
-                      popularity={movie.popularity}
-                      image={`${imageBaseUrl}${movie.poster_path}`}
-                      id={movie.id}
-                    />
-                  </div>
-                ))
-                : <div className="text-center">No movies found</div>}
+              {post.length > MovieLimit ? (
+                post.slice(0, MovieLimit).map(
+                  (
+                    movie // Check array length before slicing
+                  ) => (
+                    <div key={movie.id} className="px-2 flex justify-center">
+                      <MovieCarousel
+                        title={movie.title}
+                        popularity={movie.popularity}
+                        image={`${imageBaseUrl}${movie.poster_path}`}
+                        id={movie.id}
+                      />
+                    </div>
+                  )
+                )
+              ) : (
+                <div className="text-center">No movies found</div>
+              )}
             </Slider>
           )}
         </div>
@@ -159,8 +165,8 @@ export default function Explore() {
             <div className="text-center">Loading...</div>
           ) : (
             <Slider {...sliderSettings}>
-              {upComingMovies.length > MovieLimit
-                ? upComingMovies.slice(0, MovieLimit).map((movie) => (
+              {upComingMovies.length > MovieLimit ? (
+                upComingMovies.slice(0, MovieLimit).map((movie) => (
                   <div key={movie.id} className="px-2 flex justify-center">
                     <MovieCarousel
                       title={movie.title}
@@ -170,7 +176,9 @@ export default function Explore() {
                     />
                   </div>
                 ))
-                : <div className="text-center">No movies found</div>}
+              ) : (
+                <div className="text-center">No movies found</div>
+              )}
             </Slider>
           )}
         </div>
@@ -183,8 +191,8 @@ export default function Explore() {
             <div className="text-center">Loading...</div>
           ) : (
             <Slider {...sliderSettings}>
-              {ComedyMovies.length > MovieLimit
-                ? ComedyMovies.slice(0, MovieLimit).map((movie) => (
+              {ComedyMovies.length > MovieLimit ? (
+                ComedyMovies.slice(0, MovieLimit).map((movie) => (
                   <div key={movie.id} className="px-2 flex justify-center">
                     <MovieCarousel
                       title={movie.title}
@@ -194,7 +202,9 @@ export default function Explore() {
                     />
                   </div>
                 ))
-                : <div className="text-center">No movies found</div>}
+              ) : (
+                <div className="text-center">No movies found</div>
+              )}
             </Slider>
           )}
         </div>
@@ -207,8 +217,8 @@ export default function Explore() {
             <div className="text-center">Loading...</div>
           ) : (
             <Slider {...sliderSettings}>
-              {HorrorMovies.length > MovieLimit
-                ? HorrorMovies.slice(0, MovieLimit).map((movie) => (
+              {HorrorMovies.length > MovieLimit ? (
+                HorrorMovies.slice(0, MovieLimit).map((movie) => (
                   <div key={movie.id} className="px-2 flex justify-center">
                     <MovieCarousel
                       title={movie.title}
@@ -218,7 +228,9 @@ export default function Explore() {
                     />
                   </div>
                 ))
-                : <div className="text-center">No movies found</div>}
+              ) : (
+                <div className="text-center">No movies found</div>
+              )}
             </Slider>
           )}
         </div>

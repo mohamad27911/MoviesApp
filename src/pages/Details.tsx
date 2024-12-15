@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import { PlayCircle, Clock, Calendar, Star, TrendingUp } from 'lucide-react';
+import { PlayCircle } from 'lucide-react';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import MovieCarousel from '../components/MovieCarousel';
@@ -39,8 +39,6 @@ interface Recommendation {
   release_date: string;
   popularity: number;
 }
-
-
 
 export default function Details() {
   const { id } = useParams<Record<string, string | undefined>>();
@@ -82,7 +80,6 @@ export default function Details() {
     fetchMovie();
   }, [id]);
 
-  // Render logic unchanged except for the "Watch Trailer" button
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'var(--background-color)' }}>
@@ -150,6 +147,20 @@ export default function Details() {
                 >
                   Watch Trailer
                 </Button>
+              )}
+
+              {/* Movie Overview/Description */}
+              {movie.overview && (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    mt: 4,
+                    lineHeight: 1.6,
+                    color: 'text.primary',
+                  }}
+                >
+                  {movie.overview}
+                </Typography>
               )}
             </motion.div>
           </Grid>
