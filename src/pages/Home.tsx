@@ -8,7 +8,7 @@ import Features from '../components/Features';
 function Home() {
   return (
     <div>
-      <NavBar search ={false}/>
+      <NavBar search ={true}/>
       <HeroSection/>
       <Features/>
       <Footer/>

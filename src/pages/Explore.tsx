@@ -123,7 +123,7 @@ export default function Explore() {
 
   return (
     <div className="min-h-screen text-textColor bg-backgroundColor">
-      <NavBar search={false} />
+      <NavBar search={true} />
       <SlideShow />
 
       <div className="container mx-auto px-4 py-8">
