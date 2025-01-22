@@ -54,7 +54,7 @@ We believe in continuous enhancement to keep Cinemix relevant and innovative:
 
 Take a sneak peek at Cinemix in action:
 
-![Cinemix Screenshot](/MoviesApp/assets/image.png "Cinemix App Screenshot")
+![Cinemix Screenshot](/MoviesApp/assets/MovieAppMockup "Cinemix App Screenshot")
 
 ---
 
